@@ -23,20 +23,28 @@ public class BallController : MonoBehaviour {
         //シーン中のGameOverTextオブジェクトを取得
         this.gameoverText = GameObject.Find("GameOverText");
         this.pointText = GameObject.Find("PointText");
+        this.point = 0;
+
+        //ポイントの初期表示
+        PointViewChanged();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //ポイントの表示
-        pointText.GetComponent<Text>().text = "point: " + this.point;
-
         //ボールが画面外に出た場合
         if (this.transform.position.z < this.visiblePosZ)
         {
             //GameoverTextにゲームオーバを表示
             this.gameoverText.GetComponent<Text>().text = "Game Over";
         }
+    }
+
+    //ポイントの表示が変わるべき時にポイントを表示する
+    private void PointViewChanged()
+    {
+        //ポイントの表示
+        pointText.GetComponent<Text>().text = "point: " + this.point;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -58,6 +66,9 @@ public class BallController : MonoBehaviour {
             default:
                 break;
         }
-        
+
+        //ポイントの表示を更新
+        PointViewChanged();
+
     }
 }

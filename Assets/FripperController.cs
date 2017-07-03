@@ -30,6 +30,15 @@ public class FripperController : MonoBehaviour {
         {
             SetAngle(this.flickAngle);
         }
+        /*
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Began && touch.position > 0.5?)
+            {
+
+            }
+        }
+        */
 
         //矢印キー離された時フリッパーを元に戻す
         if (Input.GetKeyUp(KeyCode.LeftArrow) && tag == "LeftFripperTag")
