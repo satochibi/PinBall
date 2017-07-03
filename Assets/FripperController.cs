@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FripperController : MonoBehaviour {
+public class FripperController : MonoBehaviour
+{
 
     private HingeJoint myHingeJoint;
 
@@ -11,15 +12,17 @@ public class FripperController : MonoBehaviour {
     //弾いたときの傾き
     private float flickAngle = -20;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         this.myHingeJoint = GetComponent<HingeJoint>();
         //フリッパーの傾きを設定
         SetAngle(this.defaultAngle);
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         //左矢印キーを押した時左フリッパーを動かす
         if (Input.GetKeyDown(KeyCode.LeftArrow) && tag == "LeftFripperTag")
         {
@@ -30,16 +33,7 @@ public class FripperController : MonoBehaviour {
         {
             SetAngle(this.flickAngle);
         }
-        /*
-        foreach (Touch touch in Input.touches)
-        {
-            if (touch.phase == TouchPhase.Began && touch.position > 0.5?)
-            {
-
-            }
-        }
-        */
-
+        
         //矢印キー離された時フリッパーを元に戻す
         if (Input.GetKeyUp(KeyCode.LeftArrow) && tag == "LeftFripperTag")
         {
@@ -49,6 +43,42 @@ public class FripperController : MonoBehaviour {
         {
             SetAngle(this.defaultAngle);
         }
+
+
+
+
+        for (int i = 0; i < Input.touchCount; ++i)
+        {
+            Touch touch = Input.GetTouch(i);
+
+            //タッチしたところが左の方ならば
+            if (touch.position.x < Screen.width / 2 && touch.phase == TouchPhase.Began && tag == "LeftFripperTag")
+            {
+                SetAngle(this.flickAngle);
+            }
+
+            if (Screen.width / 2 < touch.position.x && touch.phase == TouchPhase.Began && tag == "RightFripperTag")
+            {
+                SetAngle(this.flickAngle);
+            }
+
+            if (touch.position.x < Screen.width / 2 && touch.phase == TouchPhase.Ended && tag == "LeftFripperTag")
+            {
+                SetAngle(this.defaultAngle);
+            }
+
+            if (Screen.width / 2 < touch.position.x && touch.phase == TouchPhase.Ended && tag == "RightFripperTag")
+            {
+                SetAngle(this.defaultAngle);
+            }
+
+        }
+
+
+
+
+
+        
     }
 
     //フリッパーの傾きを設定
